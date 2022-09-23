@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager ,AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager ,AbstractBaseUser,PermissionsMixin
 # Create your models here.
 
 
@@ -34,7 +34,7 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class Account(AbstractBaseUser):
+class Account(PermissionsMixin,AbstractBaseUser):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100,unique=True) 
     Phone_Number = models.CharField(max_length=10,unique=True,null=True)
