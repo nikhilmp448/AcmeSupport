@@ -3,7 +3,9 @@ from django.shortcuts import redirect
 
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.user.is_admin:
+            return redirect('home')
+        elif request.user.is_authenticated and request.user.is_admin == False:
             return redirect('/')
         else:
             return view_func(request, *args, **kwargs)
@@ -15,7 +17,7 @@ def allowed_user(allowed_role=[]):
             print("working>>>>>>>>>")
             group = None
             if request.user.groups.exists():
-                group = request.user.all()[0].name
+                group = request.user.groups.all()[0].name
             if group in allowed_role:
                 return view_func(request, *args, **kwargs)
             else:
@@ -32,4 +34,6 @@ def admin_only(view_func):
             return redirect('user_homepage')
         if group == 'admin':
             return view_func(request, *args, **kwargs)
+        else:
+            return HttpResponse("you are not authorized")
     return wrapper_function

@@ -38,9 +38,15 @@ def logout_user(request):
 @login_required(login_url='login')
 @admin_only
 def home(request):
-    return render(request,'home.html')
-    pass
+    users = Account.objects.all()
+    department = Department.objects.all()
+    context = {'users':users,'department':department}
+    return render(request,'home.html',context)
 
+@login_required(login_url='login')
+@allowed_user(allowed_role=['user'])
+def user_homepage(request):
+    return render (request,'user_homepage.html')
 
 @admin_only
 def create_user(request):
@@ -55,20 +61,12 @@ def create_user(request):
                 group = Group.objects.get(name='user')
             user.groups.add(group)
             print('data saved successfully')
-            return redirect('create_user')
+            return redirect('home')
         else:
             print('user is not added')
             messages.info(request,'product not added')
         form = UserCreationForm()
     return render(request,'create_user.html',{'form':form})
-
-
-@admin_only
-def list_users(request):
-    users = Account.objects.all()
-    context = {'users':users}
-    return render(request,'list_user.html',context)
-
 
 @admin_only
 def create_department(request):
@@ -86,31 +84,29 @@ def create_department(request):
     return render(request,'create_dep.html',context)
 
 
-@admin_only
-def list_dep(request):
-    department = Department.objects.all()
-    context = {'department':department}
-    return render(request,'list_dep.html',context)
-
 
 @admin_only
 def delete_dep(request,id):
     department = Department.objects.filter(id=id)
-    if Account.objects.filter(department_id=id).exists():
-        messages.error(request,'cant delete')
+    print(department)    
+    department_users = Account.objects.filter(Department_id=id).exists()
+    print(department_users)
+    if department_users:
+        messages.error(request, "you cant delete the department")
         return redirect('home')
-    else:
-        department.delete()
+    else :
+        department.delete()  
     return redirect('home')
     
 
 @admin_only
 def update_dep(request,id):
-    department = Department.objects.filter(id=id)
+    department = Department.objects.filter(id=id).first()
+    form = CreateDepartment(instance=department)
     if request.method == "POST":
         form = CreateDepartment(request.POST,instance=department)
         if form.is_valid():
             form.save()
             return redirect('home')
     context = {'form':form,'department':department}
-    return render(request,'update_dep.html',context)
+    return render(request,'create_dep.html',context)
