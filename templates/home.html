@@ -13,6 +13,7 @@
   <body>
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand">Navbar</a>
+        <a href="{% url 'list' %}" class="btn btn-outline-success my-2 my-sm-0" type="submit">list tickets</a>
         <form class="form-inline">
           <a href="{% url 'logout' %}" class="btn btn-outline-success my-2 my-sm-0" type="submit">logout</a>
         </form>
@@ -82,20 +83,6 @@
         
     </div>
     
-      {% csrf_token %}
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          {% for field in form.visible_fields %}
-          <div class="form-group">
-          <label for="example-text-input" class="form-control-label"></label>
-          {{field.label_tag}}
-          {{field}}
-        </div>
-        {% endfor %}
-        </div>
-        
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

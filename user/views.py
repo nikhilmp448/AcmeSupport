@@ -108,10 +108,10 @@ def delete_dep(request,id):
     print(department_users)
     if department_users:
         messages.error(request, "you cant delete the department")
-        return redirect('home')
+        return redirect('login')
     else :
         department.delete()  
-    return redirect('home')
+    return redirect('login')
     
 
 @admin_only
@@ -146,18 +146,19 @@ def create_ticket(request):
             
     return redirect('login')
 
+
+@admin_only
 def lists(request):
-    
+   
     p=[]
     for ticket in zenpy_client.search(type='ticket', assignee='nikhilmp448@gmail.com'):
-        p.append(ticket.to_dict())
-        print('1111111111111111111111111111111111111111')
-        print(ticket)  
+        p.append(ticket.to_dict())  
     context = {
         'p':p,
     }
     return render(request,'list.html', context)
 
+@admin_only
 def delete_ticket(request,id):
     for ticket in zenpy_client.search(type='ticket', assignee='nikhilmp448@gmail.com'):
         
