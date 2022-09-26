@@ -61,36 +61,41 @@
                         <th scope="col">created by</th>
                         <th scope="col">created at</th>
                         <th scope="col"><a class="btn btn-success my-2 my-sm-0" href="{% url 'create_department' %}">create</a></th>
-                        <th scope="col"></th>
-                        
+                        <th scope="col"></th>  
                       </tr>
                     </thead>
                     <tbody>
                         {% for department in department %}
-                          
-                        
-                         
-                          <tr>
-                              
+                          <tr>                              
                               <td>{{department.Name}}</td>
                               <td>{{department.Description}}</td>
                               <td>{{department.Created_by}}</td>
-                              <td>{{department.Created_at}}</td>
-                             
+                              <td>{{department.Created_at}}</td>                             
                               <td> <a href="{% url 'update_dep' department.id %}" target=""class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Edit</a> </td>
-                              <td> <a href="{% url 'delete_dep' department.id %}" onclick ="return confirm('Are you sure you want to delete the item .?')" target=""class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Delete</a> </td>
-                              
-                              
+                              <td> <a href="{% url 'delete_dep' department.id %}" onclick ="return confirm('Are you sure you want to delete the item .?')" target=""class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Delete</a> </td>  
                           </tr>
-                          {% endfor %}
-                         
+                          {% endfor %}                         
                       </tbody>
                   </table>
                 </div>
           </div>
         
     </div>
-    <iframe id="ticketform" src="https://your_app_host_domain/create_ticket"></iframe>
+    
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          {% for field in form.visible_fields %}
+          <div class="form-group">
+          <label for="example-text-input" class="form-control-label"></label>
+          {{field.label_tag}}
+          {{field}}
+        </div>
+        {% endfor %}
+        </div>
+        
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

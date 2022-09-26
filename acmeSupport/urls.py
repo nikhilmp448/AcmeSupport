@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from zendesk_tickets import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('user.urls')),
+    # path(r'^submit_ticket/$', views.TicketView.as_view(success_url='/',template_name='app_name/submit_ticket_page.html',ticket_subject='Website Feedback',ticket_tags=['website', 'feedback']ticket_template_name='app_name/feedback_ticket.txt',), name='submit_ticket'),
     
 ]

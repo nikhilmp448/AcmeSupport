@@ -46,6 +46,7 @@ class Account(PermissionsMixin,AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superadmin = models.BooleanField(default=False)
+    zendesk_id = models.CharField(max_length=100,null=True,blank=True)
 
     USERNAME_FIELD  ='email'
     REQUIRED_FIELDS =['name','Phone_Number']

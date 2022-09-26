@@ -1,7 +1,9 @@
+from random import choices
 from unicodedata import name
 from django import forms
 from django.db import models
 from django.db.models import fields
+
 
 from department.models import Department
 from .models import Account
@@ -30,5 +32,22 @@ class CreateDepartment(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(CreateDepartment, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = "form-control"
+
+class CreateTicket(forms.Form):
+    CHOICE = (
+        ('high','high'),
+        ('medium','medium'),
+        ('low','low'),
+    )
+    subject = forms.CharField(max_length=200)
+    description = forms.CharField(max_length=500,widget=forms.Textarea(attrs={"rows":5, "cols":20}))
+    priority = forms.ChoiceField(choices=CHOICE)
+    email = forms.CharField(max_length=100)
+    Phone_Number = forms.CharField(max_length=100)
+        
+    def __init__(self, *args, **kwargs):
+        super(CreateTicket, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs["class"] = "form-control"

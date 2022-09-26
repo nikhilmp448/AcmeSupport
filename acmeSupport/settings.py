@@ -135,3 +135,9 @@ STATICFILES_DIRS = [ BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ZENDESK_BASE_URL = 'https://sample5751.zendesk.com/'
+ZENDESK_API_USERNAME = 'NIKHIL MP'
+ZENDESK_API_TOKEN = ''
+ZENDESK_REQUESTER_ID = ...
+ZENDESK_GROUP_ID = 'group:6929284660765'
